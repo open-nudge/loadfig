@@ -9,8 +9,8 @@ from __future__ import annotations
 
 from importlib.metadata import version
 
-__version__ = version("opentemplate")
-"""Current opentemplate version."""
+__version__ = version("loadfig")
+"""Current loadfig version."""
 
 del version
 

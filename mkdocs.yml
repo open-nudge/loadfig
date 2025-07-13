@@ -6,15 +6,15 @@
 ---
 # yamllint disable rule:line-length
 site_name: >-
-  opentemplate
+  loadfig
 site_description: >-
-  All-in-one Python template. One click. Everything included.
+  One-liner Python pyproject config loader. Lightweight, simple, and VCS-aware with root auto-discovery.
 site_url: >-
-  https://open-nudge.github.io/opentemplate/
+  https://open-nudge.github.io/loadfig/
 repo_url: >-
-  https://github.com/open-nudge/opentemplate
+  https://github.com/open-nudge/loadfig
 repo_name: >-
-  open-nudge/opentemplate
+  open-nudge/loadfig
 # yamllint enable rule:line-length
 
 exclude_docs: |

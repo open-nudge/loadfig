@@ -7,10 +7,10 @@
 
 from __future__ import annotations
 
-import opentemplate
+import loadfig
 
 
 def test_version() -> None:
     """Smoke test package version."""
     # nosemgrep
-    assert opentemplate.__version__ != ""
+    assert loadfig.__version__ != ""
