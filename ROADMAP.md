@@ -7,4 +7,6 @@ SPDX-License-Identifier: Apache-2.0
 
 # Roadmap
 
+- Obtaining user feedback on the current state of the project.
+
 <!-- Describe project's roadmap here. -->
