@@ -477,6 +477,7 @@ ignore_unused = [
   "reuse",
   "ruff",
   "spdx-tools",
+  "tomli-w",
 ]
 
 [tool.interrogate]

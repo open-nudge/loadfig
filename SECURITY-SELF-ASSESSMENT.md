@@ -56,11 +56,15 @@ Source: https://tag-security.cncf.io/community/assessments/guide/self-assessment
 
 ## Overview
 
-One-liner Python pyproject config loader. Lightweight, simple, and VCS-aware with root auto-discovery.
+One-liner Python pyproject config loader.
+Lightweight, and VCS-aware with root auto-discovery.
 
 ### Background
 
-TBD
+Lightweight library loading settings from `pyproject.toml`
+or `.<tool_name>.toml`. No dependencies, but supports
+finding the root of the project as
+defined by VCS like Git, Mercurial, or Bazaar.
 
 ### Actors
 
@@ -69,15 +73,20 @@ TBD
 
 ### Actions
 
-TBD
+- All security features are provided by
+    [opentemplate](https://github.com/open-nudge/opentemplate) [](templateskip)
 
 ### Goals
 
-TBD
+Unifying configuration loading of tools from Python setting files (currently
+`pyproject.toml` or, optionally, `.<tool_name>.toml`).
 
 ### Non-goals
 
-TBD
+- Loading configuration from other files than `pyproject.toml` or
+    `.<tool_name>.toml` (e.g. environment variables)
+- Management of configuration files like `pyproject.toml` or
+    `.<tool_name>.toml` (e.g. creation, modification, deletion)
 
 ## Self-assessment use
 
@@ -147,11 +156,13 @@ file.
 
 ### Incident response
 
-TBD
+As defined in [`SECURITY.md`](https://github.com/open-nudge/cogeol/blob/master/SECURITY.md#reporting-a-vulnerability.),
+usually response should take up to a few working days, if not please reach out
+at `security@opennudge.com`.
 
 ## Appendix
 
-- Project is largely aligned with the
+- Project is aligned to a significant degree with the
     [Open Source Security Foundation best practices](https://www.bestpractices.dev/en)
 - Some false negatives regarding the best practices were spotted
     (e.g. not using fuzzing), consult `scorecard.yml` for more information

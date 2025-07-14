@@ -13,11 +13,11 @@ if typing.TYPE_CHECKING:
     import pathlib
 
 
-class TooloadError(Exception):
+class LoadfigError(Exception):
     """Base class for exceptions in this module."""
 
 
-class ConfigMissingError(TooloadError):
+class ConfigMissingError(LoadfigError):
     """Exception raised when the configuration file is missing."""
 
     def __init__(self, config: pathlib.Path) -> None:
