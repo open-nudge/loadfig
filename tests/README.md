@@ -10,5 +10,9 @@ SPDX-License-Identifier: Apache-2.0
 - `test_smoke.py` - generic
     [smoke tests](https://grafana.com/blog/2024/01/30/smoke-testing/)
     to check if the package is importable
+- `test_config.py` - test core config loading
 
-<!-- Describe your testing here -->
+## Core config loading
+
+Tests are relatively complex, as these units tests are run across matrix.
+Please refer to the docstrings of specific tests for more details.

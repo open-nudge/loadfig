@@ -16,6 +16,8 @@ Read on for developer-specific documentation.
 
 ## Internal documentation
 
-TBD
+- `src/_config.py`: core function loading `pyproject.toml`
+- `src/_load.py`: helpers responsible for different types of loading
+- `src/error.py`: custom exceptions used in the project
 
 <!-- Add description of your project for developers here. -->
