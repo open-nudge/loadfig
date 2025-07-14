@@ -48,13 +48,20 @@ ______________________________________________________________________
 
 ## Features
 
-__loadfig__ is a … allowing you to:
+__loadfig__ is a Python package designed to load
+`TOML` configuration files adhering to modern standards:
 
-- __Feature 1__: Description of the feature
-- __Feature 2__: Description of the feature
-- __Feature 3__: Description of the feature
-- __Feature 4__: Description of the feature
-- __Feature 5__: Description of the feature
+- __Unified__: Load your configuration either from `.mytool.toml`
+    or `pyproject.toml` (section `[tool.mytool]`).
+- __One-liner__: `loadfig.config(name="mytool")` returns a basic Python
+    dictionary and that is all you need.
+- __No dependencies__: Python-only, no third-party dependencies.
+- __Do one thing well__: Only load the configuration,
+    use other libraries like
+    [`python-dotenv`](https://github.com/theskumar/python-dotenv) for bells and whistles.
+- __Git-aware__: Automatically detects project's `root` using
+    git (or other VCS), no need to specify the path to
+    your configuration file.
 
 ## Quick start
 
@@ -66,49 +73,34 @@ __loadfig__ is a … allowing you to:
 
 ### Usage
 
+Assume you have the following section in your `pyproject.toml`
+file at the root of your project:
+
+```toml
+[tool.mytool]
+name = "My Tool"
+version = "1.0.0"
+```
+
+You can load the configuration for `mytool` using:
+
 ```python
 import loadfig
 
-...
+config = loadfig.config("mytool")
+config["name"]  # "My Tool"
+config["version"]  # "1.0.0"
 ```
 
-### Examples
+That is all you will likely need to do to load your configuration
+for your Python project (in a modern, unified way).
 
-<details>
-  <summary><b><big>Short</big></b> (click me)</summary>
-&nbsp;
+> [!IMPORTANT]
+> `pyproject.toml` can be located at the root of your project,
+> while the loading file can be in a subfolder (e.g. `src/mytool/loader.py`).
 
-Description of the example
-
-```python
-# Short example
-```
-
-</details>
-
-<details>
-  <summary><b><big>Common</big></b> (click me)</summary>
-&nbsp;
-
-Description of the example
-
-```python
-# Common use case
-```
-
-</details>
-
-<details>
-  <summary><b><big>Advanced</big></b> (click me)</summary>
-&nbsp;
-
-Description of the example
-
-```python
-# Something advanced and cool
-```
-
-</details>
+See [documentation](https://open-nudge.github.io/loadfig)
+for more details about the arguments and options available.
 
 <!-- md-dead-link-check: off -->
 
