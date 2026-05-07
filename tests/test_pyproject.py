@@ -6,8 +6,8 @@
 """Test loadfig.pyproject behavior.
 
 Note:
-    Most of the functionality is tested through `test_config.py`
-    as it uses `loadfig.pyproject` internally.
+    This file contains direct smoke coverage because broader `pyproject()`
+    behavior is exercised through config lookup tests.
 
 """
 
@@ -17,6 +17,6 @@ import loadfig
 
 
 def test_none_pyproject() -> None:
-    """Test the loading if no `directory` argument is passed."""
+    """Assert default-directory pyproject loading returns project metadata."""
     # nosemgrep
     assert "project" in loadfig.pyproject()

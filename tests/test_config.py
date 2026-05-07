@@ -169,7 +169,7 @@ def test_autoload(
     expected: dict[typing.Any, typing.Any],
     paths: dict[str, pathlib.Path],
 ) -> None:
-    """Test automatic config lookup across levels and VCS modes.
+    """Assert config lookup returns the first matching tool table.
 
     Args:
         name:
@@ -189,13 +189,13 @@ def test_autoload(
 
 
 def test_none_directory() -> None:
-    """Test the loading if no `directory` argument is passed on dummy tool."""
+    """Assert missing default-directory config returns an empty dictionary."""
     # nosemgrep
     assert loadfig.config("non-existent-very-unlikely-tool") == {}
 
 
 def test_config_fallback(tmp_path: pathlib.Path) -> None:
-    """Test lookup through the documented `.config/{name}.toml` path.
+    """Assert lookup uses the documented `.config/{name}.toml` path.
 
     Args:
         tmp_path:
@@ -214,7 +214,7 @@ def test_config_fallback(tmp_path: pathlib.Path) -> None:
 
 
 def _save_toml(path: pathlib.Path, data: dict[typing.Any, typing.Any]) -> None:
-    """Save TOML data to a path.
+    """Write fixture TOML data to a resolved path.
 
     Args:
         path:
@@ -233,7 +233,7 @@ def _create_subdir(
     # enq: Fixture setup mirrors VCS and non-VCS directories explicitly.
     has_vcs: bool,  # noqa: FBT001
 ) -> None:
-    """Create config files for one lookup level.
+    """Create fixture config files for one lookup level.
 
     Args:
         path:

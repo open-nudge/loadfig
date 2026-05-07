@@ -17,14 +17,24 @@ if typing.TYPE_CHECKING:
 
 @functools.cache
 def toml(path: pathlib.Path) -> dict[typing.Any, typing.Any]:
-    """Cached TOML loading.
+    """Parse and cache one TOML file.
+
+    __Example:__
+
+    ```python
+    import pathlib
+
+    from loadfig import _load
+
+    table = _load.toml(pathlib.Path("pyproject.toml"))
+    ```
 
     Args:
         path:
-            The path from which to load the file
+            TOML file path to parse.
 
     Returns:
-        Dictionary with TOML content
+        Decoded TOML table.
 
     """
     with path.open("rb") as handle:

@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Load configuration from config (`.<tool>.toml` or `pyproject.toml`)."""
+"""Load `pyproject.toml`."""
 
 from __future__ import annotations
 
@@ -24,11 +24,14 @@ def pyproject(
     - `pyproject.toml` in the `directory` (if not specified, `cwd` is used)
     - `pyproject.toml` up the tree if `vcs` is `true`
 
+    Note:
+        `pyproject.toml` is loaded once and cached for subsequent usage.
+
     __Example:__
 
     Assume the following `pyproject.toml` file at the root of your project:
 
-    ```toml
+    ```python
     pyproject = loadfig.pyproject()
 
     # Get all pyproject dependencies
@@ -37,17 +40,16 @@ def pyproject(
 
     Args:
         directory:
-            The directory to search for the configuration file.
+            The directory where lookup starts.
             If not provided, the current working directory is used.
         vcs:
-            Whether the version control system directories should be
-            searched for when localizing the project root (default: `True`).
-            Note: This will search for `.git`, `.hg`, or `.svn` directories
-            upwards from the `directory` until the root is reached.
+            Whether VCS-marked parent directories are considered.
+            Note: This searches for `.git`, `.hg`, or `.svn` directories
+            upwards from `directory`.
 
     Raises:
-        TomlDecodeError:
-            If any of the files were found, but could not be read.
+        tomllib.TOMLDecodeError:
+            If a found `pyproject.toml` file cannot be decoded.
 
     Returns:
         `pyproject.toml` content or an empty dictionary

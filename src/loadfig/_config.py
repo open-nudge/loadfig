@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Load configuration from config (`.<tool>.toml` or `pyproject.toml`)."""
+"""Load tool configuration from TOML files."""
 
 from __future__ import annotations
 
@@ -18,19 +18,17 @@ def config(
     directory: pathlib.Path | str | None = None,
     vcs: bool = True,  # noqa: FBT001, FBT002
 ) -> dict[typing.Any, typing.Any]:
-    """Read `pyproject.toml` configuration file.
+    """Load tool config from dedicated TOML files or `pyproject.toml`.
 
     The following paths are checked in order (first found used):
 
-    - `.{name}.toml` in the current directory
-    - `.config/{name}.toml` in the current directory
-    - `.{name}.toml` in the project root (if `vcs=True`, which is the default)
-    - `.config/{name}.toml` in the project root (if `vcs=True`, which is
-    - `pyproject.toml` in the current directory
-        as defined by `git`, `hg`, or `svn`
-        the default) as defined by `git`, `hg`, or `svn`
-    - `pyproject.toml` in the project root (if `vcs=True`, which is the
-        default) as defined by `git`, `hg`, or `svn`
+    - `.{name}.toml` in the start directory or a VCS-marked parent directory
+    - `.config/{name}.toml` in the start directory or a VCS-marked parent
+        directory
+    - `pyproject.toml` in the start directory or a VCS-marked parent directory
+
+    Note:
+        Parsed TOML files are loaded once and cached for subsequent usage.
 
     __Example:__
 
@@ -65,17 +63,16 @@ def config(
         name:
             The name of the tool to search for in the configuration file.
         directory:
-            The directory to search for the configuration file.
+            The directory where lookup starts.
             If not provided, the current working directory is used.
         vcs:
-            Whether the version control system directories should be
-            searched for when localizing the project root (default: `True`).
-            Note: This will search for `.git`, `.hg`, or `.svn` directories
-            upwards from the `directory` until the root is reached.
+            Whether VCS-marked parent directories are considered.
+            Note: This searches for `.git`, `.hg`, or `.svn` directories
+            upwards from `directory`.
 
     Raises:
-        TomlDecodeError:
-            If any of the files were found, but could not be read.
+        tomllib.TOMLDecodeError:
+            If a found TOML file cannot be decoded.
 
     Returns:
         Configuration dictionary of the tool or an empty dictionary

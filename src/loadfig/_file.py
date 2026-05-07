@@ -15,10 +15,20 @@ def find(
     vcs: bool,  # noqa: FBT001
     start: pathlib.Path | str,
 ) -> pathlib.Path | None:
-    """Find the project root.
+    """Find a file in the start directory or a VCS-marked parent.
 
     > [!IMPORTANT]
     > This function __should not use any third-party libraries__.
+
+    __Example:__
+
+    ```python
+    import pathlib
+
+    from loadfig import _file
+
+    path = _file.find("pyproject.toml", vcs=True, start=pathlib.Path.cwd())
+    ```
 
     Args:
         file:
@@ -29,7 +39,7 @@ def find(
             Whether to search for version control system directories.
 
     Returns:
-        The project root directory.
+        Found file path or `None` when no matching file exists.
 
     """
     start = pathlib.Path(start).resolve()
@@ -44,7 +54,7 @@ def find(
 
     for path in start.parents:
         for vcs_directory in vcs_directories:
-            if (path / vcs_directory).is_dir() and (path / file).exists():
+            if (path / vcs_directory).is_dir() and (path / file).is_file():
                 return path / file
 
     return None

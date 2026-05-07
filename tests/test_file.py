@@ -16,7 +16,7 @@ if typing.TYPE_CHECKING:
 
 
 def test_find_local(tmp_path: pathlib.Path) -> None:
-    """Test that a relative local file is found in the start directory.
+    """Assert a relative file is found in the start directory.
 
     Args:
         tmp_path:
@@ -31,7 +31,7 @@ def test_find_local(tmp_path: pathlib.Path) -> None:
 
 
 def test_parent_vcs(tmp_path: pathlib.Path) -> None:
-    """Test that a parent file is found when VCS lookup is enabled.
+    """Assert a parent file is found when VCS lookup is enabled.
 
     Args:
         tmp_path:
@@ -48,7 +48,7 @@ def test_parent_vcs(tmp_path: pathlib.Path) -> None:
 
 
 def test_parent_false(tmp_path: pathlib.Path) -> None:
-    """Test that a parent file is ignored when VCS lookup is disabled.
+    """Assert a parent file is ignored when VCS lookup is disabled.
 
     Args:
         tmp_path:
@@ -64,7 +64,7 @@ def test_parent_false(tmp_path: pathlib.Path) -> None:
 
 
 def test_parent_marker(tmp_path: pathlib.Path) -> None:
-    """Test that a parent file is ignored without a VCS marker.
+    """Assert a parent file is ignored without a VCS marker.
 
     Args:
         tmp_path:
@@ -79,7 +79,7 @@ def test_parent_marker(tmp_path: pathlib.Path) -> None:
 
 
 def _create_nested(path: pathlib.Path) -> pathlib.Path:
-    """Create and return a nested lookup start directory.
+    """Create a nested fixture directory used as the lookup start.
 
     Args:
         path:
