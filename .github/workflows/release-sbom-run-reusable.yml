@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+# SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 # SPDX-FileContributor: szymonmaszke <github@maszke.co>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -62,8 +62,8 @@ on:
         # cycle = cogeol.scientific()[-1]["cycle"]
         # cog.out(f'        default: "{cycle}"')
         # ]]]
-        default: "3.11"
-        # [[[end]]] (sum: w9GfzS/bue)
+        default: "3.12"
+        # [[[end]]] (sum: lAlMRZbmJy)
 
       # ADDITIONAL
       additional-allowed-endpoints:
