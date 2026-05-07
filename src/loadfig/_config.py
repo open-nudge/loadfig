@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+# SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 # SPDX-FileContributor: szymonmaszke <github@maszke.co>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -8,15 +8,13 @@
 from __future__ import annotations
 
 import pathlib
-import tomllib
 import typing
 
-from . import _load
+from . import _file, _load, _pyproject  # pyright: ignore[reportPrivateUsage]
 
 
 def config(
     name: str,
-    path: pathlib.Path | str | None = None,
     directory: pathlib.Path | str | None = None,
     vcs: bool = True,  # noqa: FBT001, FBT002
 ) -> dict[typing.Any, typing.Any]:
@@ -24,14 +22,15 @@ def config(
 
     The following paths are checked in order (first found used):
 
-    - `path` (section `[tool.{name}]` or data in the whole file),
-        __if provided__.
     - `.{name}.toml` in the current directory
-    - `pyproject.toml` in the current directory
+    - `.config/{name}.toml` in the current directory
     - `.{name}.toml` in the project root (if `vcs=True`, which is the default)
+    - `.config/{name}.toml` in the project root (if `vcs=True`, which is
+    - `pyproject.toml` in the current directory
         as defined by `git`, `hg`, or `svn`
-    - `pyproject.toml` in the project root (if `vcs=True`, which is the default)
-        as defined by `git`, `hg`, or `svn`
+        the default) as defined by `git`, `hg`, or `svn`
+    - `pyproject.toml` in the project root (if `vcs=True`, which is the
+        default) as defined by `git`, `hg`, or `svn`
 
     __Example:__
 
@@ -65,10 +64,6 @@ def config(
     Args:
         name:
             The name of the tool to search for in the configuration file.
-        path:
-            Explicitly provided path to the configuration file, if any.
-            If not provided, `loadfig` will try to guess based on `directory`
-            and `vcs`.
         directory:
             The directory to search for the configuration file.
             If not provided, the current working directory is used.
@@ -79,8 +74,6 @@ def config(
             upwards from the `directory` until the root is reached.
 
     Raises:
-        ConfigMissingError:
-            If the `path` is specified, but the file does not exist.
         TomlDecodeError:
             If any of the files were found, but could not be read.
 
@@ -89,54 +82,14 @@ def config(
         if no configuration was found.
 
     """
-    if (cfg := _load.specified_path(name, path)) is not None:
-        return cfg
-
     if directory is None:
         directory = pathlib.Path.cwd().resolve()
 
-    files_getters = {
-        f".{name}.toml": _file_getter,
-        "pyproject.toml": _pyproject_getter,
-    }
+    files = (f".{name}.toml", f".config/{name}.toml")
 
-    for file, getter in files_getters.items():
-        path = _load.project_root(file, vcs, start=directory)
+    for file in files:
+        path = _file.find(file, vcs, start=directory)
         if path is not None:
-            with path.open("rb") as handle:
-                return getter(tomllib.load(handle), name)
+            return _load.toml(path)
 
-    return {}
-
-
-def _file_getter(
-    dictionary: dict[str, typing.Any], _: str
-) -> dict[str, typing.Any]:
-    """Get the configuration from a file.
-
-    Args:
-        dictionary: The parsed configuration file dictionary.
-
-    Returns:
-        The configuration dictionary for the specified tool, or an empty
-        dictionary if the tool is not found.
-
-    """
-    return dictionary
-
-
-def _pyproject_getter(
-    dictionary: dict[str, typing.Any], name: str
-) -> dict[str, typing.Any]:
-    """Get the configuration for a specific tool from the `pyproject.toml`.
-
-    Args:
-        dictionary: The parsed `pyproject.toml` dictionary.
-        name: The name of the tool to search for.
-
-    Returns:
-        The configuration dictionary for the specified tool, or an empty
-        dictionary if the tool is not found.
-
-    """
-    return dictionary.get("tool", {}).get(name, {})
+    return _pyproject.pyproject(directory, vcs).get("tool", {}).get(name, {})

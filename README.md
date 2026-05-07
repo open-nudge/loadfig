@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 SPDX-FileContributor: szymonmaszke <github@maszke.co>
 
 SPDX-License-Identifier: Apache-2.0
@@ -49,12 +49,13 @@ ______________________________________________________________________
 ## Features
 
 __loadfig__ is a Python package designed to load
-`TOML` configuration files adhering to modern standards:
+`pyproject` and `TOML` configuration files adhering to modern standards:
 
-- __Unified__: Load your configuration either from `.mytool.toml`
-    or `pyproject.toml` (section `[tool.mytool]`).
-- __One-liner__: `loadfig.config(name="mytool")` returns a basic Python
-    dictionary and that is all you need.
+- __Unified__: Load your configuration either from `.<mytool>.toml`,
+    `.config/mytool.toml` or `pyproject.toml` (section `[tool.mytool]`)
+    using __single line__: `tool_config = loadfig.config(name="<mytool>")`
+- __Load `pyproject.toml`__: Find and load the whole `pyproject.toml`
+    using single line: `pyproject = loadfig.pyproject()`
 - __No dependencies__: Python-only, no third-party dependencies.
 - __Do one thing well__: Only load the configuration,
     use other libraries like
@@ -62,6 +63,15 @@ __loadfig__ is a Python package designed to load
 - __Git-aware__: Automatically detects project's `root` using
     git (or other VCS), no need to specify the path to
     your configuration file.
+
+## Where can I use it?
+
+When creating Python tools and you want to:
+
+- give your users a standard place to configure it
+    (`pyproject.toml` or `.<mytool>.toml`)
+- make the choices readable and findable
+- create tools without maintaining boilerplate
 
 ## Quick start
 
@@ -72,6 +82,20 @@ __loadfig__ is a Python package designed to load
 ```
 
 ### Usage
+
+#### `pyproject.toml` loading
+
+One line is all you need:
+
+```python
+# Returns dict with all pyproject contents
+pyproject = loadfig.pyproject()
+
+# Get the name of the project
+print(pyproject["project"]["name"])
+```
+
+#### Tool configuration loading
 
 Assume you have the following section in your `pyproject.toml`
 file at the root of your project:

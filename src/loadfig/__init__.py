@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+# SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 # SPDX-FileContributor: szymonmaszke <github@maszke.co>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -16,8 +16,8 @@ from __future__ import annotations
 
 from importlib.metadata import version
 
-from . import error
 from ._config import config
+from ._pyproject import pyproject
 
 __version__ = version("loadfig")
 """Current loadfig version."""
@@ -27,5 +27,5 @@ del version
 __all__: list[str] = [
     "__version__",
     "config",
-    "error",
+    "pyproject",
 ]
