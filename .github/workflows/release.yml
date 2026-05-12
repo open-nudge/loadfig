@@ -143,6 +143,7 @@ jobs:
       group: "release"
       # Full history to generate full changelog
       fetch-depth: 0
+      full-checkout: true
       upload-name: "CHANGELOGS-${{ github.sha }}"
       upload-path: "CHANGELOGS-${{ github.sha }}"
 
